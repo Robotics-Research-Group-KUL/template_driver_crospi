@@ -33,7 +33,8 @@ class TemplateDriverEtasl : public RobotDriver {
         virtual void construct(std::string robot_name, 
                         FeedbackMsg* fb, 
                         SetpointMsg* sp,
-                        const Json::Value& config) override;
+                        const Json::Value& config,
+                        boost::shared_ptr<etasl::JsonChecker> jsonchecker) override;
 
         /**
          * will only return true if it has received values for all the joints named in jnames.

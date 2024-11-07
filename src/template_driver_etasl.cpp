@@ -19,15 +19,16 @@ TemplateDriverEtasl::TemplateDriverEtasl()
 void TemplateDriverEtasl::construct(std::string robot_name, 
                         FeedbackMsg* fb, 
                         SetpointMsg* sp,
-                        const Json::Value& config)
+                        const Json::Value& config,
+                        boost::shared_ptr<etasl::JsonChecker> jsonchecker)
 {
 
-    periodicity = config["periodicity"].asDouble();
+    periodicity = jsonchecker->asDouble(config, "periodicity");
 
     std::vector<double> init_joints;
     // init_joints.resize(parameters["initial_joints"].size(), 0.0);
-    for (auto n : config["initial_joints"]) {
-        init_joints.push_back(n.asDouble());
+    for (auto n : jsonchecker->asArray(config, "initial_joints")) {
+        init_joints.push_back(jsonchecker->asDouble(n, ""));
     }
 
     initial_joints = init_joints;
