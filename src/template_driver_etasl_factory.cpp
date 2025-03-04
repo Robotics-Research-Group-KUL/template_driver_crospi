@@ -86,15 +86,15 @@ public:
      * @brief create the solver with the given parameters
      *
      */
-    virtual RobotDriver::SharedPtr create(const Json::Value& parameters)
+    virtual RobotDriver::SharedPtr create(const Json::Value& parameters, boost::shared_ptr<etasl::JsonChecker> jsonchecker)
     {
-        std::string p_ip_address = parameters["ip_address"].asString();
+        std::string p_ip_address = jsonchecker->asString(parameters, "ip_address");
         
         // get fri_port from parameters
-        unsigned int p_fri_port = parameters["fri_port"].asUInt();
+        unsigned int p_fri_port = jsonchecker->asUInt(parameters, "fri_port");
 
         // print fri_port
-        std::cout << "------IP: " << p_ip_address << "  ,   fri_port: " << p_fri_port << " ,   type:" << parameters["fri_port"].isNull() << std::endl;
+        // std::cout << "------IP: " << p_ip_address << "  ,   fri_port: " << p_fri_port << " ,   type:" << parameters["fri_port"].isNull() << std::endl;
 
 
 
@@ -118,7 +118,7 @@ public:
 
         auto shared_robot_driv =  std::make_shared<TemplateDriverEtasl>();
 
-        shared_robot_driv->construct(name, feedback_ptr, setpoint_ptr, parameters);
+        shared_robot_driv->construct(name, feedback_ptr, setpoint_ptr, parameters, jsonchecker);
 
 
 
