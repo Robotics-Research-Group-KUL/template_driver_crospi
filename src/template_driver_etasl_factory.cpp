@@ -38,7 +38,7 @@ public:
     {
         std::string schema_src = R"(
                     {
-                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "$schema": "http://json-schema.org/draft-06/schema",
                         "$id":"template_driver_etasl.json",
                         "type":"object",
                         "properties":{
@@ -57,12 +57,6 @@ public:
                                 "description":"Periodicity in which the integration will be performed in seconds. 1/periodicity is the update frequency in Hz.",
                                 "type":"number",
                                 "default": 0.01
-                            },
-                            "joint_names": {
-                                "description":"Names of the joints in order from the world to the end effector. This names need to be consistent with the ones declared in the URDF file of the robot.",
-                                "type":"array",
-                                "items": {"type": "string"},
-                                "default": ["joint1", "joint2", "joint3", "etc..."]
                             }
                         },
                         "required":["is-template_driver_etasl","initial_joints", "periodicity"],
