@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(template_driver_etasl)
 
-message("--------------helloooo----------------")
+message("--------------template_driver_etasl compiling ----------------")
 
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -29,7 +29,9 @@ set(src_template_driver_etasl
     src/template_driver_etasl_factory.cpp
 )
 
-add_library(template_driver_etasl ${src_template_driver_etasl})
+add_library(template_driver_etasl 
+            SHARED
+            ${src_template_driver_etasl})
 
 set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to include external lib
 
@@ -67,18 +69,41 @@ set(rosdependencies
 "pluginlib"
 )
 
+# set(etasl_task_utils_DIR /workspaces/devcontainer/build/etasl_ros2/src/misc/etasl_task_utils)
+
+# find_library(etasl_task_utils
+#              NAMES libetasl_task_utils.so
+#              PATHS ${etasl_task_utils_DIR}
+# )
+# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/path/to/etasl_task_utils")
+
+# message(--------- jfjjfjfj ${CMAKE_SOURCE_DIR})
+
+# find_library(etasl_task_utils
+#               NAMES libetasl_task_utils.so)
+
+# find_library(robot_interfacing_utils
+#               NAMES librobot_interfacing_utils.so)
+
+# find_library(etasl_node_utils
+#               NAMES libetasl_node_utils.so)
+# find_package(etasl_node_utils REQUIRED)
+# find_package(robot_interfacing_utils REQUIRED)
 
 set(dependencies
     fmt   
     # pugixml
     jsoncpp
-    # ${MY_EXTERNAL_LIB_DIR_SO_LOCATION}/libFRIClient.so
-    ${MY_EXTERNAL_LIB}
-    )
+    # etasl_misc_lib 
+    # etasl_task_utils
+    # ${etasl_ros2_LIBRARIES}
+    # etasl_interfacing_utils
+    # etasl_node_utils
+    # ${robot_interfacing_utils}
+    # ${etasl_task_utils}
+  )
 
-
-
-
+pluginlib_export_plugin_description_file(etasl_ros2 plugins.xml)
 
 
 target_include_directories(template_driver_etasl PUBLIC
@@ -88,22 +113,30 @@ target_include_directories(template_driver_etasl PUBLIC
 ament_target_dependencies(template_driver_etasl ${rosdependencies})  
 target_link_libraries(template_driver_etasl ${dependencies})
 
-install(DIRECTORY include/
-  DESTINATION include)
-
-install(TARGETS template_driver_etasl
-  DESTINATION lib/${PROJECT_NAME})
-
-  # pluginlib_export_plugin_description_file(etasl_ros2 plugins.xml)
-
-
-ament_export_include_directories(
-  include
-)
+ament_export_dependencies(etasl_ros2)
 
 ament_export_libraries(
   template_driver_etasl
 )
+
+# install(TARGETS template_driver_etasl
+#   DESTINATION lib/${PROJECT_NAME})
+
+install(
+  TARGETS template_driver_etasl
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY include/
+  DESTINATION include)
+
+# ament_export_include_directories(
+#   include
+# )
+
+
 
 
 
