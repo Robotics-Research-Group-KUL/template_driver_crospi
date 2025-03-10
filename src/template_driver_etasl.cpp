@@ -9,14 +9,14 @@
 namespace etasl {
 
 
-TemplateDriverEtasl::TemplateDriverEtasl()
+template_driver_etasl::template_driver_etasl()
     // : periodicity(periodicity_val)
     // , initial_joints(init_joints)
     // , joint_pos(init_joints)
 {
 }
 
-void TemplateDriverEtasl::construct(std::string robot_name, 
+void template_driver_etasl::construct(std::string robot_name, 
                         FeedbackMsg* fb, 
                         SetpointMsg* sp,
                         const Json::Value& config,
@@ -37,11 +37,11 @@ void TemplateDriverEtasl::construct(std::string robot_name,
     feedback_ptr = fb; //defined in RobotDriver super class.
     setpoint_ptr = sp; //defined in RobotDriver super class.
     name = robot_name; //defined in RobotDriver super class.
-    std::cout << "Constructed object of TemplateDriverEtasl class with name: " << name << std::endl;
+    std::cout << "Constructed object of template_driver_etasl class with name: " << name << std::endl;
 
 }
 
-bool TemplateDriverEtasl::initialize()
+bool template_driver_etasl::initialize()
 {
     joint_pos = initial_joints;
 
@@ -58,7 +58,7 @@ bool TemplateDriverEtasl::initialize()
 }
 
 
-void TemplateDriverEtasl::update(volatile std::atomic<bool>& stopFlag)
+void template_driver_etasl::update(volatile std::atomic<bool>& stopFlag)
 {
     feedback_ptr->mtx.lock();
     setpoint_ptr->mtx.lock();
@@ -84,36 +84,36 @@ void TemplateDriverEtasl::update(volatile std::atomic<bool>& stopFlag)
     feedback_ptr->mtx.unlock();
 }
 
-void TemplateDriverEtasl::on_configure() {
+void template_driver_etasl::on_configure() {
     // std::cout << "entering on configure =======================" << std::endl;
 
 }
 
-void TemplateDriverEtasl::on_activate() 
+void template_driver_etasl::on_activate() 
 {
 
 
 }
 
-void TemplateDriverEtasl::on_deactivate() {
+void template_driver_etasl::on_deactivate() {
     // std::cout << "entering on deactivate =======================" << std::endl;
 
 }
 
-void TemplateDriverEtasl::on_cleanup() {
+void template_driver_etasl::on_cleanup() {
     // std::cout << "entering on cleanup =======================" << std::endl;
 
 }
 
 
-void TemplateDriverEtasl::finalize() {
+void template_driver_etasl::finalize() {
     std::cout << "finalize() called =======================" << std::endl;
 
 }
 
 
 
-TemplateDriverEtasl::~TemplateDriverEtasl() {
+template_driver_etasl::~template_driver_etasl() {
 
 };
 
@@ -123,4 +123,4 @@ TemplateDriverEtasl::~TemplateDriverEtasl() {
 
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(etasl::TemplateDriverEtasl, etasl::RobotDriver)
+PLUGINLIB_EXPORT_CLASS(etasl::template_driver_etasl, etasl::RobotDriver)

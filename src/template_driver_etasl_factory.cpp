@@ -12,11 +12,11 @@
 namespace etasl {
 
 /**
- * This is a factory that can create a TemplateDriverEtasl
+ * This is a factory that can create a template_driver_etasl
  * The platform specific part is given with the constructor of this factory
  * Afterwards, everything is generic and independent of the platform
  */
-class TemplateDriverEtaslFactory : public RobotDriverFactory {
+class template_driver_etasl_factory : public RobotDriverFactory {
 
     FeedbackMsg* feedback_ptr;
     SetpointMsg* setpoint_ptr; 
@@ -24,7 +24,7 @@ class TemplateDriverEtaslFactory : public RobotDriverFactory {
 public:
     typedef std::shared_ptr<RobotDriverFactory> SharedPtr;
 
-    TemplateDriverEtaslFactory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr)
+    template_driver_etasl_factory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr)
     :feedback_ptr(_feedback_ptr)
     ,setpoint_ptr(_setpoint_ptr)
     {
@@ -69,7 +69,7 @@ public:
     }
 
     /**
-     * @brief gets the name of this solver
+     * @brief gets the name of this driver
      */
     virtual const char* getName()
     {
@@ -77,7 +77,7 @@ public:
     }
 
     /**
-     * @brief create the solver with the given parameters
+     * @brief create the driver with the given parameters
      *
      */
     virtual RobotDriver::SharedPtr create(const Json::Value& parameters, boost::shared_ptr<etasl::JsonChecker> jsonchecker)
@@ -103,14 +103,14 @@ public:
         //     varnames.push_back(n.asString());
         // }
 
-        // TemplateDriverEtasl::TemplateDriverEtasl(
+        // template_driver_etasl::template_driver_etasl(
         //     std::string robot_name,
         //     FeedbackMsg* fb,
         //     SetpointMsg* sp,
         //     double periodicity_val,
         //     std::vector<double> init_joints)
 
-        auto shared_robot_driv =  std::make_shared<TemplateDriverEtasl>();
+        auto shared_robot_driv =  std::make_shared<template_driver_etasl>();
 
         shared_robot_driv->construct(name, feedback_ptr, setpoint_ptr, parameters, jsonchecker);
 
@@ -118,7 +118,7 @@ public:
 
         return shared_robot_driv;
 
-        //         return std::make_shared<TemplateDriverEtasl>(
+        //         return std::make_shared<template_driver_etasl>(
         // name, 
         // feedback_ptr, 
         // setpoint_ptr, 
@@ -126,13 +126,13 @@ public:
         // p_fri_port);
     }
 
-    virtual ~TemplateDriverEtaslFactory() { }
+    virtual ~template_driver_etasl_factory() { }
 };
 
-void registerTemplateDriverEtaslFactory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr)
+void register_template_driver_etasl_factory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr)
 {
     // be sure to use the BASE CLASS as template parameter for the Registry!
-    Registry<RobotDriverFactory>::registerFactory(std::make_shared<TemplateDriverEtaslFactory>(_feedback_ptr, _setpoint_ptr));
+    Registry<RobotDriverFactory>::registerFactory(std::make_shared<template_driver_etasl_factory>(_feedback_ptr, _setpoint_ptr));
 }
 
 } // namespace

@@ -4,7 +4,7 @@
 
 namespace etasl {
 
-void registerTemplateDriverEtaslFactory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr);
+void register_template_driver_etasl_factory(FeedbackMsg* _feedback_ptr, SetpointMsg* _setpoint_ptr);
 
 
 } // namespace
