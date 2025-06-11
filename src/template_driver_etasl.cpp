@@ -20,7 +20,7 @@ void template_driver_etasl::construct(std::string robot_name,
                         FeedbackMsg* fb, 
                         SetpointMsg* sp,
                         const Json::Value& config,
-                        boost::shared_ptr<etasl::JsonChecker> jsonchecker)
+                        std::shared_ptr<etasl::JsonChecker> jsonchecker)
 {
 
     periodicity = jsonchecker->asDouble(config, "periodicity");

@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema",
+    "$id":"template_driver_etasl.json",
+    "type":"object",
+    "properties":{
+        "is-template_driver_etasl" : {
+            "description":"To indicate that the tasks will be executed using the template_driver_etasl driver when running on the real robot.",
+            "type":"boolean",
+            "const": true
+          }
+    },
+    "required":["is-template_driver_etasl"],
+    "additionalProperties": true,
+    "dependencies":{
+        "is-template_driver_etasl":{
+          "required":["initial_joints", "periodicity"],
+          "properties":{
+            "initial_joints" : {
+                "description":"Initial joint values in [rad] for rotational joints or [m] for prismatic joints. The size must coincide with the length of the robot_joints of the specified robot.",
+                "type":"array",
+                "items": {"type": "number"},
+                "default": [0.0, 0.0 ,0.0 ,0.0 ,0.0 ,0.0]
+            },
+            "periodicity" : {
+                "description":"Periodicity in which the integration will be performed in seconds. 1/periodicity is the update frequency in Hz.",
+                "type":"number",
+                "default": 0.01
+            }
+          }
+        }
+      }
+}

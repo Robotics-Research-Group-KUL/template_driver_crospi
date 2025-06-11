@@ -26,7 +26,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(src_template_driver_etasl
     src/template_driver_etasl.cpp
-    src/template_driver_etasl_factory.cpp
 )
 
 add_library(template_driver_etasl 
@@ -132,6 +131,9 @@ install(
 install(DIRECTORY include/
   DESTINATION include)
 
+install(DIRECTORY json_schemas
+  DESTINATION share/${PROJECT_NAME})
+  
 # ament_export_include_directories(
 #   include
 # )
