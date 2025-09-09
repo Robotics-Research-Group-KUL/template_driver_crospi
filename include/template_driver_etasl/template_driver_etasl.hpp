@@ -20,19 +20,17 @@ class template_driver_etasl : public RobotDriver {
         // SetpointMsg* setpoint_ptr; Defined in super class RobotDriver at header file robotdriver.hpp
         // std::string name;; Defined in super class RobotDriver at header file robotdriver.hpp
 
-        double periodicity;
-        ControlMode::ControlMode control_mode;
+        double periodicity_;
+        robotdrivers::DynamicJointDataField setpoint_joint_vel_;
+        robotdrivers::DynamicJointDataField joint_pos_;
 
-        std::vector<double> initial_joints;
-        std::vector<double> joint_pos;
+        static constexpr size_t DOF = 6; //Change to suit the degrees of freedom (i.e. number of joints) of the robot
         
 
     public:
         template_driver_etasl();
 
         virtual void construct(std::string robot_name, 
-                        FeedbackMsg* fb, 
-                        SetpointMsg* sp,
                         const Json::Value& config,
                         std::shared_ptr<etasl::JsonChecker> jsonchecker) override;
 

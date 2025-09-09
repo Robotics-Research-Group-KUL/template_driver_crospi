@@ -10,49 +10,46 @@ namespace etasl {
 
 
 template_driver_etasl::template_driver_etasl()
-    // : periodicity(periodicity_val)
-    // , initial_joints(init_joints)
-    // , joint_pos(init_joints)
 {
+    setpoint_joint_vel_.data.resize(DOF, 0.0); //Initialize setpoint joint velocities to zero
 }
 
 void template_driver_etasl::construct(std::string robot_name, 
-                        FeedbackMsg* fb, 
-                        SetpointMsg* sp,
                         const Json::Value& config,
                         std::shared_ptr<etasl::JsonChecker> jsonchecker)
 {
 
-    periodicity = jsonchecker->asDouble(config, "periodicity");
-
-    std::vector<double> init_joints;
-    // init_joints.resize(parameters["initial_joints"].size(), 0.0);
-    for (auto n : jsonchecker->asArray(config, "initial_joints")) {
-        init_joints.push_back(jsonchecker->asDouble(n, ""));
-    }
-
-    initial_joints = init_joints;
-    joint_pos = initial_joints;
-
-    feedback_ptr = fb; //defined in RobotDriver super class.
-    setpoint_ptr = sp; //defined in RobotDriver super class.
+    periodicity_ = jsonchecker->asDouble(config, "periodicity");
     name = robot_name; //defined in RobotDriver super class.
-    std::cout << "Constructed object of template_driver_etasl class with name: " << name << std::endl;
+
+
+    AvailableFeedback available_fb{};
+    available_fb.joint_pos = true;
+    // Uncomment the following lines to enable more feedback variables, if your robot supports them.
+    // available_fb.joint_vel = true;
+    // available_fb.joint_torque= true;
+    // available_fb.joint_current= true;
+    // available_fb.cartesian_pos= true;
+    // available_fb.cartesian_quat= true;
+    // available_fb.cartesian_twist= true;
+    // available_fb.cartesian_wrench= true;
+    // available_fb.base_pos= true;
+    // available_fb.base_quat= true;
+    // available_fb.base_twist= true;
+
+    constructPorts(DOF, available_fb); //Constructs all shared pointers and initialize data structures. Call after assigning available_feedback booleans.
+
+    std::cout << "Constructed robot driver with name: " << name << std::endl;
 
 }
 
 bool template_driver_etasl::initialize()
 {
-    joint_pos = initial_joints;
+    //READ INITIAL JOINT POSITIONS FROM THE ROBOT AND SAVE THEM IN initial_joints
 
-    feedback_ptr->mtx.lock();
-    setpoint_ptr->mtx.lock();
-
-    feedback_ptr->joint.pos.data = joint_pos;
-    feedback_ptr->joint.pos.is_available = true;
-
-    setpoint_ptr->mtx.unlock();
-    feedback_ptr->mtx.unlock();
+    std::vector<float> initial_joints = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; //REPLACE with actual reading of initial joint positions from the robot
+    std::copy(initial_joints.begin(), initial_joints.end(), joint_pos_.data.begin()); //joint_pos_ = initial_joints;
+    writeFeedbackJointPosition(joint_pos_);
 
     return true;
 }
@@ -60,28 +57,15 @@ bool template_driver_etasl::initialize()
 
 void template_driver_etasl::update(volatile std::atomic<bool>& stopFlag)
 {
-    feedback_ptr->mtx.lock();
-    setpoint_ptr->mtx.lock();
+    readSetpointJointVelocity(setpoint_joint_vel_);
 
-    assert(feedback_ptr->joint.pos.data.size() == setpoint_ptr->velocity.data.size());
+    assert(joint_pos_.data.size() == setpoint_joint_vel_.data.size());
 
-    for (unsigned int i=0; i<feedback_ptr->joint.pos.data.size(); ++i) {
-        joint_pos[i] += setpoint_ptr->velocity.data[i]*periodicity; //simple integration
-        // joint_pos[i] += setpoint_ptr->velocity.data[i]*0.0000005; //simple integration
-        // joint_pos[i] += 0.00000001; //test
-        feedback_ptr->joint.pos.data[i] = joint_pos[i];
+    for (unsigned int i=0; i<setpoint_joint_vel_.data.size(); ++i) {
+        joint_pos_.data[i] += setpoint_joint_vel_.data[i]*periodicity_; //EXAMPLE: simple integration (REPLACE with your robot control command)
     }
 
-    setpoint_ptr->velocity.fs = etasl::OldData;
-    // std::cout << "vel val:" << setpoint_ptr->velocity.data[0] << " , " << setpoint_ptr->velocity.data[1] << " , "<< setpoint_ptr->velocity.data[2] << std::endl;
-
-
-    // std::cout << "Driver update has set all pos values to " << feedback_ptr->joint.pos.data[0] << std::endl;
-    // std::cout << "Driver update has set all pos values to " << this->periodicity << std::endl;
-    // std::cout << "Driver update has set all pos values to " << getName() << std::endl;
-
-    setpoint_ptr->mtx.unlock();
-    feedback_ptr->mtx.unlock();
+    writeFeedbackJointPosition(joint_pos_);
 }
 
 void template_driver_etasl::on_configure() {
@@ -108,6 +92,9 @@ void template_driver_etasl::on_cleanup() {
 
 void template_driver_etasl::finalize() {
     std::cout << "finalize() called =======================" << std::endl;
+
+    //REPLACE WITH INSTRUCTIONS TO SAFELY FINALIZE COMMUNICATION WITH THE ROBOT
+    // THIS WILL ONLY BE CALLED ONCE WHEN THE CONTROLLER SHUTS DOWN
 
 }
 

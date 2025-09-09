@@ -16,6 +16,15 @@ find_package(ament_cmake REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(etasl_ros2 REQUIRED)
 
+# -- start --Stuff for triple buffer implementation of boost 1.89
+set(BOOST_ROOT "/opt/boost/1.89.0")
+set(CMAKE_PREFIX_PATH "/opt/boost/1.89.0" ${CMAKE_PREFIX_PATH})
+find_package(Boost 1.89 REQUIRED)
+message(STATUS "Using Boost version ${Boost_VERSION}")
+message(STATUS "Boost include dirs: ${Boost_INCLUDE_DIRS}")
+
+# -- end -- Stuff for triple buffer implementation of boost 1.89
+
 include_directories(
    include
 )
@@ -107,7 +116,8 @@ pluginlib_export_plugin_description_file(etasl_ros2 plugins.xml)
 
 target_include_directories(template_driver_etasl PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+  ${Boost_INCLUDE_DIRS})
 
 ament_target_dependencies(template_driver_etasl ${rosdependencies})  
 target_link_libraries(template_driver_etasl ${dependencies})
