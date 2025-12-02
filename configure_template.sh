@@ -65,6 +65,10 @@ cd "$package_directory" || exit 1
 grep -lRZ "$package_name" . --exclude-dir=.git --exclude-dir=build --exclude-dir=install | \
 xargs -0 -l sed -i -e "s|$package_name|$NEW_NAME|g"
 
+mv "include/$package_name/$package_name.hpp" "include/$package_name/$NEW_NAME.hpp"
+mv "json_schemas/$package_name.schema.json" "json_schemas/$NEW_NAME.schema.json"
+mv "src/$package_name.cpp" "src/$NEW_NAME.cpp"
+
 mv "include/$package_name" "include/$NEW_NAME"
 
 # Rename the package folder
