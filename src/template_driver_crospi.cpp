@@ -1,4 +1,4 @@
-#include "template_driver_etasl/template_driver_etasl.hpp"
+#include "template_driver_crospi/template_driver_crospi.hpp"
 #include <fmt/format.h>
 #include <iostream>
 
@@ -9,12 +9,12 @@
 namespace etasl {
 
 
-template_driver_etasl::template_driver_etasl()
+template_driver_crospi::template_driver_crospi()
 {
     setpoint_joint_vel_.data.resize(DOF, 0.0); //Initialize setpoint joint velocities to zero
 }
 
-void template_driver_etasl::construct(std::string robot_name, 
+void template_driver_crospi::construct(std::string robot_name, 
                         const Json::Value& config,
                         std::shared_ptr<etasl::JsonChecker> jsonchecker)
 {
@@ -43,7 +43,7 @@ void template_driver_etasl::construct(std::string robot_name,
 
 }
 
-bool template_driver_etasl::initialize()
+bool template_driver_crospi::initialize()
 {
     //READ INITIAL JOINT POSITIONS FROM THE ROBOT AND SAVE THEM IN initial_joints
 
@@ -55,7 +55,7 @@ bool template_driver_etasl::initialize()
 }
 
 
-void template_driver_etasl::update(volatile std::atomic<bool>& stopFlag)
+void template_driver_crospi::update(volatile std::atomic<bool>& stopFlag)
 {
     readSetpointJointVelocity(setpoint_joint_vel_);
 
@@ -68,29 +68,29 @@ void template_driver_etasl::update(volatile std::atomic<bool>& stopFlag)
     writeFeedbackJointPosition(joint_pos_);
 }
 
-void template_driver_etasl::on_configure() {
+void template_driver_crospi::on_configure() {
     // std::cout << "entering on configure =======================" << std::endl;
 
 }
 
-void template_driver_etasl::on_activate() 
+void template_driver_crospi::on_activate() 
 {
 
 
 }
 
-void template_driver_etasl::on_deactivate() {
+void template_driver_crospi::on_deactivate() {
     // std::cout << "entering on deactivate =======================" << std::endl;
 
 }
 
-void template_driver_etasl::on_cleanup() {
+void template_driver_crospi::on_cleanup() {
     // std::cout << "entering on cleanup =======================" << std::endl;
 
 }
 
 
-void template_driver_etasl::finalize() {
+void template_driver_crospi::finalize() {
     std::cout << "finalize() called =======================" << std::endl;
 
     //REPLACE WITH INSTRUCTIONS TO SAFELY FINALIZE COMMUNICATION WITH THE ROBOT
@@ -100,7 +100,7 @@ void template_driver_etasl::finalize() {
 
 
 
-template_driver_etasl::~template_driver_etasl() {
+template_driver_crospi::~template_driver_crospi() {
 
 };
 
@@ -110,4 +110,4 @@ template_driver_etasl::~template_driver_etasl() {
 
 
 #include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(etasl::template_driver_etasl, etasl::RobotDriver)
+PLUGINLIB_EXPORT_CLASS(etasl::template_driver_crospi, etasl::RobotDriver)

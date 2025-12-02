@@ -9,9 +9,9 @@
 
 namespace etasl {
 
-class template_driver_etasl : public RobotDriver {
+class template_driver_crospi : public RobotDriver {
     public:
-        typedef std::shared_ptr<template_driver_etasl> SharedPtr;
+        typedef std::shared_ptr<template_driver_crospi> SharedPtr;
 
 
     private:
@@ -28,7 +28,7 @@ class template_driver_etasl : public RobotDriver {
         
 
     public:
-        template_driver_etasl();
+        template_driver_crospi();
 
         virtual void construct(std::string robot_name, 
                         const Json::Value& config,
@@ -53,7 +53,7 @@ class template_driver_etasl : public RobotDriver {
 
         // virtual const std::string& getName() const override;
 
-        virtual ~template_driver_etasl();
+        virtual ~template_driver_crospi();
 };
 
 } // namespace etasl

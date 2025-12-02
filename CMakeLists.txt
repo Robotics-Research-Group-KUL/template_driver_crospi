@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
-project(template_driver_etasl)
+project(template_driver_crospi)
 
-message("--------------template_driver_etasl compiling ----------------")
+message("--------------template_driver_crospi compiling ----------------")
 
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -33,13 +33,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 # include_directories(include ${LUA_INCLUDE_DIR})
 
-set(src_template_driver_etasl
-    src/template_driver_etasl.cpp
+set(src_template_driver_crospi
+    src/template_driver_crospi.cpp
 )
 
-add_library(template_driver_etasl 
+add_library(template_driver_crospi 
             SHARED
-            ${src_template_driver_etasl})
+            ${src_template_driver_crospi})
 
 set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to include external lib
 
@@ -58,7 +58,7 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 
 # include_directories(${MY_EXTERNAL_LIB_INCLUDE})
 
-# add_dependencies(template_driver_etasl external_compiled_lib) #Makes sure to compile first external_compiled_lib before the template_driver_etasl
+# add_dependencies(template_driver_crospi external_compiled_lib) #Makes sure to compile first external_compiled_lib before the template_driver_crospi
 
 # message("-------------- MY_EXTERNAL_LIB_DIR compiled----------------")
 
@@ -114,25 +114,25 @@ set(dependencies
 pluginlib_export_plugin_description_file(etasl_ros2 plugins.xml)
 
 
-target_include_directories(template_driver_etasl PUBLIC
+target_include_directories(template_driver_crospi PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   ${Boost_INCLUDE_DIRS})
 
-ament_target_dependencies(template_driver_etasl ${rosdependencies})  
-target_link_libraries(template_driver_etasl ${dependencies})
+ament_target_dependencies(template_driver_crospi ${rosdependencies})  
+target_link_libraries(template_driver_crospi ${dependencies})
 
 ament_export_dependencies(etasl_ros2)
 
 ament_export_libraries(
-  template_driver_etasl
+  template_driver_crospi
 )
 
-# install(TARGETS template_driver_etasl
+# install(TARGETS template_driver_crospi
 #   DESTINATION lib/${PROJECT_NAME})
 
 install(
-  TARGETS template_driver_etasl
+  TARGETS template_driver_crospi
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin

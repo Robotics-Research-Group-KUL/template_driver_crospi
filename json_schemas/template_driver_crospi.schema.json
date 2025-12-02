@@ -1,18 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema",
-    "$id":"template_driver_etasl.json",
+    "$id":"template_driver_crospi.json",
     "type":"object",
     "properties":{
-        "is-template_driver_etasl" : {
-            "description":"To indicate that the tasks will be executed using the template_driver_etasl driver when running on the real robot.",
+        "is-template_driver_crospi" : {
+            "description":"To indicate that the tasks will be executed using the template_driver_crospi driver when running on the real robot.",
             "type":"boolean",
             "const": true
           }
     },
-    "required":["is-template_driver_etasl"],
+    "required":["is-template_driver_crospi"],
     "additionalProperties": true,
     "dependencies":{
-        "is-template_driver_etasl":{
+        "is-template_driver_crospi":{
           "required":["robot_joints","initial_joints", "periodicity"],
           "properties":{
               "robot_joints": {
