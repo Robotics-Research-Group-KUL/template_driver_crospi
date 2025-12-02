@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(ament_index_cpp REQUIRED)
 
 find_package(pluginlib REQUIRED)
-find_package(etasl_ros2 REQUIRED)
+find_package(crospi_core REQUIRED)
 
 # -- start --Stuff for triple buffer implementation of boost 1.89
 set(BOOST_ROOT "/opt/boost/1.89.0")
@@ -73,11 +73,11 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 
 
 set(rosdependencies
-"etasl_ros2"
+"crospi_core"
 "pluginlib"
 )
 
-# set(etasl_task_utils_DIR /workspaces/devcontainer/build/etasl_ros2/src/misc/etasl_task_utils)
+# set(etasl_task_utils_DIR /workspaces/devcontainer/build/crospi_core/src/misc/etasl_task_utils)
 
 # find_library(etasl_task_utils
 #              NAMES libetasl_task_utils.so
@@ -93,9 +93,9 @@ set(rosdependencies
 # find_library(robot_interfacing_utils
 #               NAMES librobot_interfacing_utils.so)
 
-# find_library(etasl_node_utils
-#               NAMES libetasl_node_utils.so)
-# find_package(etasl_node_utils REQUIRED)
+# find_library(crospi_node_utils
+#               NAMES libcrospi_node_utils.so)
+# find_package(crospi_node_utils REQUIRED)
 # find_package(robot_interfacing_utils REQUIRED)
 
 set(dependencies
@@ -104,14 +104,14 @@ set(dependencies
     jsoncpp
     # etasl_misc_lib 
     # etasl_task_utils
-    # ${etasl_ros2_LIBRARIES}
+    # ${crospi_core_LIBRARIES}
     # etasl_interfacing_utils
-    # etasl_node_utils
+    # crospi_node_utils
     # ${robot_interfacing_utils}
     # ${etasl_task_utils}
   )
 
-pluginlib_export_plugin_description_file(etasl_ros2 plugins.xml)
+pluginlib_export_plugin_description_file(crospi_core plugins.xml)
 
 
 target_include_directories(template_driver_crospi PUBLIC
@@ -122,7 +122,7 @@ target_include_directories(template_driver_crospi PUBLIC
 ament_target_dependencies(template_driver_crospi ${rosdependencies})  
 target_link_libraries(template_driver_crospi ${dependencies})
 
-ament_export_dependencies(etasl_ros2)
+ament_export_dependencies(crospi_core)
 
 ament_export_libraries(
   template_driver_crospi
