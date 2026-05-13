@@ -16,21 +16,13 @@ find_package(ament_cmake REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(crospi_core REQUIRED)
 
-# -- start --Stuff for triple buffer implementation of boost 1.89
-set(BOOST_ROOT "$ENV{HOME}/.local/lib/boost/1.89.0")
-set(CMAKE_PREFIX_PATH "$ENV{HOME}/.local/lib/boost/1.89.0" ${CMAKE_PREFIX_PATH})
 find_package(Boost 1.89 REQUIRED)
-# find_package(Boost 1.89 REQUIRED COMPONENTS lockfree)
 message(STATUS "Using Boost version ${Boost_VERSION}")
-# -- end -- Stuff for triple buffer implementation of boost 1.89
-
-
 message(STATUS "Boost include dirs: ${Boost_INCLUDE_DIRS}")
 
 
 include_directories(
    include
-  #  $ENV{HOME}/.local/lib/boost/1.89.0/include  # <- point directly to Boost include
    ${Boost_INCLUDE_DIRS}
 )
 
@@ -91,7 +83,6 @@ set(rosdependencies
 # )
 # set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/path/to/etasl_task_utils")
 
-# message(--------- jfjjfjfj ${CMAKE_SOURCE_DIR})
 
 # find_library(etasl_task_utils
 #               NAMES libetasl_task_utils.so)
