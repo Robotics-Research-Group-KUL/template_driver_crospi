@@ -10,9 +10,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# find_package(ament_cmake_ros REQUIRED)
-# find_package(ament_index_cpp REQUIRED)
-
 find_package(pluginlib REQUIRED)
 find_package(crospi_core REQUIRED)
 
@@ -20,16 +17,8 @@ find_package(Boost 1.89 REQUIRED)
 message(STATUS "Using Boost version ${Boost_VERSION}")
 message(STATUS "Boost include dirs: ${Boost_INCLUDE_DIRS}")
 
-
-include_directories(
-   include
-   ${Boost_INCLUDE_DIRS}
-)
-
-
 set(CMAKE_CXX_STANDARD 17)
 
-# include_directories(include ${LUA_INCLUDE_DIR})
 
 set(src_template_driver_crospi
     src/template_driver_crospi.cpp
@@ -70,9 +59,6 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 
 
 
-set(rosdependencies
-pluginlib
-)
 
 # set(etasl_task_utils_DIR /workspaces/devcontainer/build/crospi_core/src/misc/etasl_task_utils)
 
@@ -94,24 +80,34 @@ pluginlib
 # find_package(crospi_node_utils REQUIRED)
 # find_package(robot_interfacing_utils REQUIRED)
 
+set(rosdependencies
+  pluginlib
+)
+
 set(dependencies
     fmt   
     # pugixml
     jsoncpp
-    # crospi_core::crospi_core
-    # etasl_misc_lib 
-    # etasl_task_utils
-    # ${crospi_core_LIBRARIES}
-    # etasl_interfacing_utils
-    # crospi_node_utils
-    # ${robot_interfacing_utils}
-    # ${etasl_task_utils}
+    # etasl::expressiongraph_context 
+    # # etasl::expressiongraph_solver_qpoases 
+    # etasl::expressiongraph_context_lua   
+    # fmt   
+    # jsoncpp
+    # crospi_core::crospi_utils
+    # crospi_core::crospi_node_utils
     crospi_core::robot_interfacing_utils
   )
 
   set(ros_targets
     pluginlib::pluginlib
+    # rclcpp::rclcpp
+    # rclcpp_lifecycle::rclcpp_lifecycle
+    # ${std_msgs_TARGETS}
+    # ${std_srvs_TARGETS}
+    # ${sensor_msgs_TARGETS}
+    # ${lifecycle_msgs_TARGETS}
   )
+  
 
 pluginlib_export_plugin_description_file(crospi_core plugins.xml)
 
@@ -144,9 +140,6 @@ ament_export_libraries(
   template_driver_crospi
 )
 
-# install(TARGETS template_driver_crospi
-#   DESTINATION lib/${PROJECT_NAME})
-
 install(
   TARGETS template_driver_crospi
   LIBRARY DESTINATION lib
@@ -164,14 +157,6 @@ install(DIRECTORY json_schemas
 #   include
 # )
 
-
-
-
-
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -183,7 +168,6 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
 
 
 ament_package()
