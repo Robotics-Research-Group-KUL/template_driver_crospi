@@ -83,7 +83,7 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 
 # All commented dependencies are already inherited and linked thanks to crospi_core::robot_interfacing_utils (thanks to ament_export_dependencies)
 set(rosdependencies
-  # pluginlib
+  pluginlib
 )
 
 set(dependencies
