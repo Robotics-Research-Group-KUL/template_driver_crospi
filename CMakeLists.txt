@@ -80,14 +80,16 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 # find_package(crospi_node_utils REQUIRED)
 # find_package(robot_interfacing_utils REQUIRED)
 
+
+# All commented dependencies are already inherited and linked thanks to crospi_core::robot_interfacing_utils (thanks to ament_export_dependencies)
 set(rosdependencies
-  pluginlib
+  # pluginlib
 )
 
 set(dependencies
-    fmt   
+    # fmt   
     # pugixml
-    jsoncpp
+    # jsoncpp
     # etasl::expressiongraph_context 
     # # etasl::expressiongraph_solver_qpoases 
     # etasl::expressiongraph_context_lua   
