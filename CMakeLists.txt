@@ -71,8 +71,7 @@ set(MY_EXTERNAL_LIB "") #sets it empty such that it can be redefined later to in
 
 
 set(rosdependencies
-"crospi_core"
-"pluginlib"
+pluginlib
 )
 
 # set(etasl_task_utils_DIR /workspaces/devcontainer/build/crospi_core/src/misc/etasl_task_utils)
@@ -99,6 +98,7 @@ set(dependencies
     fmt   
     # pugixml
     jsoncpp
+    # crospi_core::crospi_core
     # etasl_misc_lib 
     # etasl_task_utils
     # ${crospi_core_LIBRARIES}
@@ -106,10 +106,10 @@ set(dependencies
     # crospi_node_utils
     # ${robot_interfacing_utils}
     # ${etasl_task_utils}
+    crospi_core::robot_interfacing_utils
   )
 
   set(ros_targets
-    crospi_core::crospi_core
     pluginlib::pluginlib
   )
 
