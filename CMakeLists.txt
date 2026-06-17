@@ -13,7 +13,7 @@ find_package(ament_cmake REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(crospi_core REQUIRED)
 
-find_package(Boost 1.89 REQUIRED)
+find_package(Boost 1.89 CONFIG REQUIRED)
 message(STATUS "Using Boost version ${Boost_VERSION}")
 message(STATUS "Boost include dirs: ${Boost_INCLUDE_DIRS}")
 
