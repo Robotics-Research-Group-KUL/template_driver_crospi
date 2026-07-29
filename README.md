@@ -6,7 +6,7 @@ If used without any modification, this will simply simulate a robot by integrati
 
 ## Documentation
 
-For documentation and tutorials, checkout our [crospi website](https://crospi-website-907f83.pages.gitlab.kuleuven.be/).
+For documentation and tutorials, checkout our [crospi website](https://rob.pages.gitlab.kuleuven.be/crospi/).
 
 
 ## License and acknowledgements
